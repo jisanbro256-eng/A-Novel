@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -130,7 +129,7 @@
         <h1>The Cursed Age</h1>
         <p>Step into a dark world of mystery and duels.</p>
 
-        <!-- Enter Button -->
+        <!-- Enter Button linked to Episode 1 -->
         <a href="episode1.html" class="btn btn-enter">ENTER</a>
 
         <!-- Menu Button -->
@@ -153,7 +152,7 @@
         </div>
     </div>
 
-    <!-- Audio Element: Pointing to your local uploaded file bg-music.mp3 -->
+    <!-- Audio Element: Connected to your background music file -->
     <audio id="bgMusic" loop src="bg-music.mp3"></audio>
 
     <script>
@@ -191,7 +190,7 @@
                     btn.innerText = "🔇 Pause Phonk Music";
                     isPlaying = true;
                 }).catch(e => {
-                    alert("Please upload your 'bg-music.mp3' file to your GitHub repository first!");
+                    alert("Please make sure your audio file is named 'bg-music.mp3' and uploaded to your GitHub repository!");
                 });
             }
         }
@@ -233,3 +232,4 @@
     </script>
 </body>
 </html>
+
