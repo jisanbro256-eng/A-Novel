@@ -7,6 +7,58 @@
 <title>The Cursed Age | Novel</title>
 
 <style>
+  .ending-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  max-width: 300px;
+  margin: 30px auto 0;
+}
+
+.ending-btn {
+  display: block;
+  padding: 14px 18px;
+  text-align: center;
+  text-decoration: none;
+  font-family: 'Cinzel', serif;
+  font-size: 12px;
+  letter-spacing: 1.5px;
+  border: 1px solid;
+  border-radius: 3px;
+  transition: .3s ease;
+}
+
+.menu-btn {
+  color: var(--gold);
+  border-color: rgba(198,166,106,.5);
+  background: rgba(198,166,106,.05);
+}
+
+.next-btn {
+  color: #fff;
+  border-color: var(--red);
+  background: linear-gradient(110deg, #4c1020, #941d36);
+  box-shadow: 0 0 15px rgba(165,30,53,.15);
+}
+
+.ending-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 0 22px rgba(165,30,53,.35);
+}
+
+.menu-btn:hover {
+  background: rgba(198,166,106,.15);
+}
+
+.next-btn:hover {
+  background: linear-gradient(110deg, #76172c, #bd2948);
+}
+
+@media(max-width: 450px) {
+  .ending-buttons {
+    max-width: 100%;
+  }
+}
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Crimson+Text:wght@400;600;700&display=swap');
 
 :root {
@@ -598,9 +650,20 @@ footer {
     </section>
 
     <div class="end-card">
-      <h2>TO BE CONTINUED</h2>
-      <p>The Royal Tournament has only just begun...</p>
+  <h2>TO BE CONTINUED</h2>
+  <p>The Royal Tournament has only just begun...</p>
+
+  <div class="ending-buttons">
+    <a href="index.html" class="ending-btn menu-btn">
+      ← RETURN TO MAIN MENU
+    </a>
+
+    <a href="episode2.html" class="ending-btn next-btn">
+      TAP FOR EPISODE 2 →
+    </a>
+  </div>
     </div>
+      
 
   </article>
 </main>
