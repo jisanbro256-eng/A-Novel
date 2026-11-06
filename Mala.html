@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#09070c">
+<title>The Cursed Age | Novel</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Crimson+Text:wght@400;600;700&display=swap');
+
+:root {
+  --bg: #09070c;
+  --panel: rgba(19, 13, 22, .88);
+  --red: #a51e35;
+  --gold: #c6a66a;
+  --text: #ded5d2;
+  --muted: #93858d;
+  --reader-size: 19px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Crimson Text', Georgia, serif;
+  overflow-x: hidden;
+  isolation: isolate;
+}
+
+/* ANIMATED ATMOSPHERE */
+
+.atmosphere {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 15% 20%, rgba(104, 13, 39, .25), transparent 45%),
+    radial-gradient(ellipse at 85% 70%, rgba(58, 22, 91, .22), transparent 45%),
+    linear-gradient(135deg, #09070c, #110911, #08070c);
+  background-size: 200% 200%;
+  animation: atmosphereMove 18s ease-in-out infinite alternate;
+}
+
+@keyframes atmosphereMove {
+  0% { background-position: 0% 0%; }
+  100% { background-position: 100% 100%; }
+}
+
+.mist {
+  position: absolute;
+  width: 150%;
+  height: 45%;
+  left: -25%;
+  border-radius: 50%;
+  filter: blur(65px);
+  opacity: .12;
+  background: #7d173d;
+  animation: mistMove 22s ease-in-out infinite alternate;
+}
+
+.mist.one { top: 10%; }
+.mist.two {
+  bottom: 5%;
+  background: #552078;
+  animation-delay: -8s;
+}
+
+@keyframes mistMove {
+  from { transform: translateX(-12%) scale(1); }
+  to { transform: translateX(12%) scale(1.25); }
+}
+
+.magic-circle {
+  position: absolute;
+  width: 420px;
+  height: 420px;
+  border: 1px solid rgba(190, 52, 80, .12);
+  border-radius: 50%;
+  top: 28%;
+  left: 50%;
+  transform: translateX(-50%);
+  box-shadow:
+    0 0 50px rgba(130, 20, 55, .08),
+    inset 0 0 50px rgba(130, 20, 55, .06);
+  animation: circleSpin 80s linear infinite;
+}
+
+.magic-circle::before,
+.magic-circle::after {
+  content: "";
+  position: absolute;
+  inset: 35px;
+  border: 1px dashed rgba(190, 52, 80, .18);
+  border-radius: 50%;
+}
+
+.magic-circle::after {
+  inset: 90px;
+  border-style: solid;
+  transform: rotate(45deg);
+}
+
+@keyframes circleSpin {
+  to { rotate: 360deg; }
+}
+
+/* FLOATING EMBERS */
+
+.embers {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.ember {
+  position: absolute;
+  bottom: -20px;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: #e94b51;
+  box-shadow: 0 0 9px 2px rgba(230, 44, 66, .55);
+  animation: rise linear infinite;
+  opacity: 0;
+}
+
+@keyframes rise {
+  0% {
+    transform: translate(0, 0) scale(.5);
+    opacity: 0;
+  }
+  15% { opacity: .8; }
+  85% { opacity: .5; }
+  100% {
+    transform: translate(45px, -105vh) scale(1.5);
+    opacity: 0;
+  }
+}
+
+/* MAIN LAYOUT */
+
+header, main, footer, .music-panel {
+  position: relative;
+  z-index: 1;
+}
+
+header {
+  min-height: 330px;
+  padding: 75px 20px 55px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  border-bottom: 1px solid rgba(198, 166, 106, .2);
+  background: linear-gradient(to bottom, rgba(0,0,0,.25), transparent);
+}
+
+.eyebrow {
+  color: var(--red);
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  font-size: 12px;
+  margin-bottom: 20px;
+}
+
+header h1 {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(35px, 8vw, 65px);
+  color: #e7d9c4;
+  letter-spacing: 5px;
+  text-shadow: 0 0 25px rgba(180, 30, 60, .45);
+}
+
+.header-line {
+  width: 100px;
+  height: 2px;
+  background: linear-gradient(to right, transparent, var(--red), transparent);
+  margin: 22px auto;
+}
+
+header p {
+  color: var(--muted);
+  font-size: 17px;
+  letter-spacing: 2px;
+}
+
+main {
+  width: min(850px, 92%);
+  margin: 45px auto 100px;
+}
+
+.episode-card {
+  background: var(--panel);
+  border: 1px solid rgba(198, 166, 106, .17);
+  border-radius: 5px;
+  padding: clamp(22px, 5vw, 55px);
+  box-shadow: 0 20px 80px rgba(0,0,0,.45);
+  backdrop-filter: blur(8px);
+}
+
+.season-label {
+  text-align: center;
+  font-family: 'Cinzel', serif;
+  color: var(--red);
+  letter-spacing: 4px;
+  font-size: 12px;
+  margin-bottom: 15px;
+}
+
+.episode-title {
+  text-align: center;
+  font-family: 'Cinzel', serif;
+  font-size: clamp(23px, 5vw, 35px);
+  line-height: 1.5;
+  color: var(--gold);
+}
+
+.episode-subtitle {
+  text-align: center;
+  color: var(--muted);
+  margin-top: 12px;
+  letter-spacing: 2px;
+  font-size: 14px;
+}
+
+.separator {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin: 35px 0;
+  color: var(--red);
+}
+
+.separator::before,
+.separator::after {
+  content: "";
+  height: 1px;
+  flex: 1;
+  background: linear-gradient(to right, transparent, rgba(165,30,53,.6));
+}
+
+.separator::after {
+  transform: rotate(180deg);
+}
+
+.scene-heading {
+  color: var(--gold);
+  font-family: 'Cinzel', serif;
+  font-size: 15px;
+  letter-spacing: 2px;
+  margin: 35px 0 17px;
+  text-transform: uppercase;
+}
+
+.story p {
+  font-size: var(--reader-size);
+  line-height: 1.9;
+  color: var(--text);
+  margin: 0 0 22px;
+  text-align: justify;
+}
+
+.dialogue {
+  padding-left: 17px;
+  border-left: 2px solid rgba(165, 30, 53, .75);
+  color: #ead8d1 !important;
+  margin: 20px 0 24px !important;
+}
+
+.character {
+  color: var(--gold);
+  font-weight: 700;
+}
+
+.impact {
+  text-align: center !important;
+  color: #c54b5b !important;
+  font-family: 'Cinzel', serif;
+  letter-spacing: 3px;
+  margin: 25px 0 !important;
+}
+
+.scene-break {
+  text-align: center;
+  color: var(--red);
+  letter-spacing: 8px;
+  margin: 40px 0;
+}
+
+.end-card {
+  margin-top: 50px;
+  padding: 30px 15px;
+  text-align: center;
+  border-top: 1px solid rgba(198,166,106,.2);
+  border-bottom: 1px solid rgba(198,166,106,.2);
+}
+
+.end-card h2 {
+  font-family: 'Cinzel', serif;
+  color: var(--red);
+  font-size: 23px;
+  letter-spacing: 4px;
+  margin-bottom: 10px;
+}
+
+.end-card p {
+  text-align: center;
+  color: var(--muted);
+}
+
+/* READING CONTROLS */
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 25px;
+}
+
+.control-button {
+  background: rgba(25,15,24,.9);
+  border: 1px solid rgba(198,166,106,.3);
+  color: var(--gold);
+  padding: 10px 17px;
+  font-family: inherit;
+  font-size: 15px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.control-button:active {
+  background: rgba(165,30,53,.3);
+}
+
+.control-button:hover {
+  border-color: var(--red);
+}
+
+/* MUSIC PANEL */
+
+.music-panel {
+  position: fixed;
+  right: 15px;
+  bottom: 15px;
+  width: min(260px, calc(100% - 30px));
+  background: rgba(12,8,14,.95);
+  border: 1px solid rgba(165,30,53,.5);
+  padding: 13px;
+  border-radius: 5px;
+  box-shadow: 0 5px 30px rgba(0,0,0,.5);
+  backdrop-filter: blur(10px);
+}
+
+.music-title {
+  font-family: 'Cinzel', serif;
+  color: var(--gold);
+  font-size: 11px;
+  letter-spacing: 2px;
+  margin-bottom: 10px;
+}
+
+.music-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.music-row button {
+  background: #591326;
+  border: 1px solid #a51e35;
+  color: white;
+  padding: 8px 13px;
+  cursor: pointer;
+  border-radius: 3px;
+  font-family: inherit;
+}
+
+.music-row input {
+  min-width: 0;
+  width: 100%;
+  accent-color: var(--red);
+}
+
+.music-note {
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 8px;
+}
+
+footer {
+  text-align: center;
+  padding: 35px 15px 110px;
+  color: #655760;
+  letter-spacing: 2px;
+  font-size: 12px;
+}
+
+/* MOBILE */
+
+@media(max-width: 600px) {
+  header {
+    min-height: 260px;
+    padding: 55px 15px 40px;
+  }
+
+  header h1 {
+    letter-spacing: 2px;
+  }
+
+  main {
+    width: 94%;
+    margin-top: 25px;
+  }
+
+  .episode-card {
+    padding: 23px 19px;
+  }
+
+  .story p {
+    line-height: 1.8;
+  }
+
+  .magic-circle {
+    width: 280px;
+    height: 280px;
+  }
+}
+
+@media(prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="atmosphere">
+  <div class="mist one"></div>
+  <div class="mist two"></div>
+  <div class="magic-circle"></div>
+</div>
+
+<div class="embers" id="embers"></div>
+
+<header>
+  <div class="eyebrow">A Dark Fantasy Novel</div>
+  <h1>THE CURSED AGE</h1>
+  <div class="header-line"></div>
+  <p>Every legend begins with a choice.</p>
+</header>
+
+<main>
+
+  <div class="controls">
+    <button class="control-button" onclick="changeFont(-1)">A−</button>
+    <button class="control-button" onclick="changeFont(1)">A+</button>
+    <button class="control-button" onclick="scrollToTop()">↑ Top</button>
+  </div>
+
+  <article class="episode-card">
+
+    <div class="season-label">SEASON 01 · EPISODE 01</div>
+    <h2 class="episode-title">THE ROYAL TOURNAMENT BEGINS</h2>
+    <p class="episode-subtitle">A New Chapter · A New Battle</p>
+
+    <div class="separator">✦</div>
+
+    <section class="story">
+
+      <!-- Replace or expand the sample story below with your complete original episode text. -->
+
+      <h3 class="scene-heading">Scene 01 — The Tournament</h3>
+
+      <p>
+        The middle zone was overflowing with people. Visitors had arrived
+        from different regions, filling the streets with excitement and
+        anticipation. Everyone had gathered for one major event—the Royal
+        Tournament.
+      </p>
+
+      <p>
+        At the centre of the region stood a massive stadium. Its enormous
+        gates were open, welcoming warriors and spectators alike. The
+        atmosphere was filled with excitement as everyone waited for the
+        tournament to begin.
+      </p>
+
+      <p>
+        Inside the stadium, the announcement of the first duel echoed
+        throughout the arena.
+      </p>
+
+      <p class="impact">FIRST MATCH — FORHAD VS SARA</p>
+
+      <p>
+        Both competitors stepped into the arena. The crowd immediately
+        became louder. Forhad stood confidently, while Sara watched him
+        with a focused expression.
+      </p>
+
+      <p class="dialogue">
+        <span class="character">Forhad:</span>
+        "Let's make this interesting."
+      </p>
+
+      <p class="dialogue">
+        <span class="character">Sara:</span>
+        "Don't underestimate me."
+      </p>
+
+      <p>
+        The signal was given. Both warriors moved at once, beginning a
+        fast exchange of attacks. Forhad managed to gain the advantage
+        through his timing and quick reactions, but Sara refused to
+        surrender.
+      </p>
+
+      <p>
+        After another intense exchange, Forhad finally secured the
+        victory. The audience erupted with applause.
+      </p>
+
+      <p>
+        Sara accepted the result, and the two competitors showed respect
+        for each other before leaving the arena.
+      </p>
+
+      <div class="scene-break">✦ ✦ ✦</div>
+
+      <h3 class="scene-heading">Scene 02 — The Next Opponents</h3>
+
+      <p>
+        The excitement inside the stadium continued to rise. The
+        tournament announcer stepped forward and prepared to introduce
+        the next match.
+      </p>
+
+      <p class="impact">NEXT MATCH — NATAN VS AMY</p>
+
+      <p>
+        Two figures entered the arena from opposite sides.
+      </p>
+
+      <p>
+        Natan walked forward calmly. He remained silent, showing almost
+        no reaction to the enormous crowd surrounding him.
+      </p>
+
+      <p>
+        On the opposite side, Amy approached with a cold and sharp
+        expression. Her eyes remained fixed on Natan.
+      </p>
+
+      <p>
+        Neither of them spoke. They simply stood facing each other,
+        carefully observing their next opponent.
+      </p>
+
+      <p>
+        The atmosphere changed. The crowd's excitement turned into
+        curiosity as everyone waited for the first move.
+      </p>
+
+      <p>
+        Natan slowly raised his gaze.
+      </p>
+
+      <p>
+        Amy's expression remained unchanged.
+      </p>
+
+      <p>
+        The next battle was about to begin.
+      </p>
+
+    </section>
+
+    <div class="end-card">
+      <h2>TO BE CONTINUED</h2>
+      <p>The Royal Tournament has only just begun...</p>
+    </div>
+
+  </article>
+</main>
+
+<footer>
+  THE CURSED AGE · A DARK FANTASY STORY
+</footer>
+
+<!-- AMBIENT SOUND CONTROLS -->
+
+<div class="music-panel">
+  <div class="music-title">DARK AMBIENCE</div>
+
+  <div class="music-row">
+    <button id="musicButton" onclick="toggleMusic()">▶ Play</button>
+    <input id="volume" type="range" min="0" max="100" value="30">
+  </div>
+
+  <div class="music-note" id="musicStatus">
+    Tap Play to activate the atmosphere.
+  </div>
+</div>
+
+<script>
+// FLOATING EMBERS
+
+const emberContainer = document.getElementById("embers");
+
+for (let i = 0; i < 35; i++) {
+  const ember = document.createElement("div");
+  ember.className = "ember";
+  ember.style.left = Math.random() * 100 + "%";
+  ember.style.animationDuration = (8 + Math.random() * 15) + "s";
+  ember.style.animationDelay = (Math.random() * 15) + "s";
+  ember.style.width = (2 + Math.random() * 3) + "px";
+  ember.style.height = ember.style.width;
+  emberContainer.appendChild(ember);
+}
+
+// FONT SIZE CONTROL
+
+let fontSize = 19;
+
+function changeFont(amount) {
+  fontSize = Math.max(15, Math.min(27, fontSize + amount));
+  document.documentElement.style.setProperty(
+    "--reader-size", fontSize + "px"
+  );
+}
+
+function scrollToTop() {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+// GENERATED DARK AMBIENT SOUND
+
+let audioContext = null;
+let masterGain = null;
+let oscillators = [];
+let isPlaying = false;
+
+function startAudio() {
+  const AudioContextClass =
+    window.AudioContext || window.webkitAudioContext;
+
+  if (!AudioContextClass) {
+    document.getElementById("musicStatus").textContent =
+      "Audio is not supported by this browser.";
+    return false;
+  }
+
+  audioContext = new AudioContextClass();
+
+  masterGain = audioContext.createGain();
+  masterGain.gain.value =
+    Number(document.getElementById("volume").value) / 100 * 0.12;
+  masterGain.connect(audioContext.destination);
+
+  const frequencies = [55, 82.41, 110];
+
+  frequencies.forEach((frequency, index) => {
+    const oscillator = audioContext.createOscillator();
+    const gain = audioContext.createGain();
+
+    oscillator.type = index === 1 ? "triangle" : "sine";
+    oscillator.frequency.value = frequency;
+    gain.gain.value = index === 0 ? 0.45 : 0.16;
+
+    oscillator.connect(gain);
+    gain.connect(masterGain);
+    oscillator.start();
+
+    oscillators.push(oscillator);
+  });
+
+  return true;
+}
+
+async function toggleMusic() {
+  const button = document.getElementById("musicButton");
+  const status = document.getElementById("musicStatus");
+
+  if (!audioContext) {
+    if (!startAudio()) return;
+  }
+
+  try {
+    if (!isPlaying) {
+      await audioContext.resume();
+      isPlaying = true;
+      button.textContent = "Ⅱ Pause";
+      status.textContent = "Dark ambience is playing.";
+    } else {
+      await audioContext.suspend();
+      isPlaying = false;
+      button.textContent = "▶ Play";
+      status.textContent = "Ambience paused.";
+    }
+  } catch (error) {
+    status.textContent = "Could not start audio in this browser.";
+  }
+}
+
+document.getElementById("volume").addEventListener("input", function() {
+  if (masterGain && audioContext) {
+    masterGain.gain.setTargetAtTime(
+      Number(this.value) / 100 * 0.12,
+      audioContext.currentTime,
+      0.05
+    );
+  }
+});
+</script>
+
+</body>
+</html>
