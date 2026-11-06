@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Cursed Age - Main Menu</title>
+    <style>
+        body {
+            background-color: #030712;
+            color: #e5e7eb;
+            font-family: sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            overflow: hidden;
+            position: relative;
+        }
+        /* Moving particles background */
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+        .card {
+            position: relative;
+            z-index: 2;
+            background-color: rgba(17, 24, 39, 0.9);
+            border: 1px solid #1f2937;
+            border-radius: 1rem;
+            padding: 30px;
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+        }
+        h1 {
+            color: #f59e0b;
+            font-size: 28px;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        p {
+            color: #9ca3af;
+            font-size: 14px;
+            margin-bottom: 30px;
+        }
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 16px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: 0.2s;
+            box-sizing: border-box;
+        }
+        .btn-enter {
+            background-color: #d97706;
+            color: #000;
+            border: none;
+        }
+        .btn-enter:hover {
+            background-color: #f59e0b;
+        }
+        .btn-option {
+            background-color: #1f2937;
+            color: #e5e7eb;
+            border: 1px solid #374151;
+        }
+        .btn-option:hover {
+            background-color: #374151;
+        }
+        /* Modal styling for 1-10 rating */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 10;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background: #111827;
+            border: 1px solid #374151;
+            padding: 25px;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 320px;
+            text-align: center;
+        }
+        .rating-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+            margin: 20px 0;
+        }
+        .rate-btn {
+            background: #1f2937;
+            color: #f59e0b;
+            border: 1px solid #374151;
+            padding: 10px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .rate-btn:hover {
+            background: #d97706;
+            color: #000;
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="bgCanvas"></canvas>
+
+    <div class="card">
+        <h1>The Cursed Age</h1>
+        <p>Step into a dark world of mystery and duels.</p>
+
+        <!-- Enter Button -->
+        <a href="episode1.html" class="btn btn-enter">ENTER</a>
+
+        <!-- Menu Button -->
+        <button onclick="alert('Menu options: Chapters, Lore, and Characters coming soon!')" class="btn btn-option">MENU</button>
+
+        <!-- Rate Button -->
+        <button onclick="openRating()" class="btn btn-option" style="color: #fbbf24;">RATE THE NOVEL</button>
+        
+        <!-- Music Toggle Button -->
+        <button onclick="toggleMusic()" id="musicBtn" class="btn btn-option" style="font-size: 13px; padding: 8px; background: transparent; border: none; color: #9ca3af;">🎵 Play Phonk Music</button>
+    </div>
+
+    <!-- Rating Modal -->
+    <div id="ratingModal" class="modal">
+        <div class="modal-content">
+            <h3 style="color: #f59e0b; margin-top: 0;">Rate This Story</h3>
+            <p style="margin-bottom: 10px;">Select a score from 1 to 10:</p>
+            <div class="rating-grid" id="ratingGrid"></div>
+            <button onclick="closeRating()" style="background:none; border:none; color:#9ca3af; cursor:pointer; margin-top:10px;">Cancel</button>
+        </div>
+    </div>
+
+    <!-- Audio Element: Pointing to your local uploaded file bg-music.mp3 -->
+    <audio id="bgMusic" loop src="bg-music.mp3"></audio>
+
+    <script>
+        // Rating 1-10 generation
+        const grid = document.getElementById('ratingGrid');
+        for(let i = 1; i <= 10; i++) {
+            let btn = document.createElement('button');
+            btn.className = 'rate-btn';
+            btn.innerText = i;
+            btn.onclick = function() {
+                alert(`Thank you for rating us ${i}/10! Your feedback has been recorded.`);
+                closeRating();
+            };
+            grid.appendChild(btn);
+        }
+
+        function openRating() {
+            document.getElementById('ratingModal').style.display = 'flex';
+        }
+        function closeRating() {
+            document.getElementById('ratingModal').style.display = 'none';
+        }
+
+        // Music Play/Pause Toggle
+        let isPlaying = false;
+        function toggleMusic() {
+            const music = document.getElementById('bgMusic');
+            const btn = document.getElementById('musicBtn');
+            if(isPlaying) {
+                music.pause();
+                btn.innerText = "🎵 Play Phonk Music";
+                isPlaying = false;
+            } else {
+                music.play().then(() => {
+                    btn.innerText = "🔇 Pause Phonk Music";
+                    isPlaying = true;
+                }).catch(e => {
+                    alert("Please upload your 'bg-music.mp3' file to your GitHub repository first!");
+                });
+            }
+        }
+
+        // Floating Background Particles Effect
+        const canvas = document.getElementById('bgCanvas');
+        const ctx = canvas.getContext('2d');
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.onresize = resize;
+        resize();
+
+        let particles = [];
+        for(let i=0; i<40; i++) {
+            particles.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                size: Math.random() * 2 + 1,
+                speedY: -Math.random() * 0.3 - 0.1,
+                opacity: Math.random() * 0.5 + 0.1
+            });
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.y += p.speedY;
+                if(p.y < 0) p.y = canvas.height;
+                ctx.fillStyle = `rgba(212, 175, 55, ${p.opacity})`;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                ctx.fill();
+            });
+            requestAnimationFrame(animate);
+        }
+        animate();
+    </script>
+</body>
+</html>
