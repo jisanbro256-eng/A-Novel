@@ -1,0 +1,1205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#07050a">
+<title>The Cursed Age | Frozen Resolve</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800&family=Crimson+Text:wght@400;600;700&display=swap');
+
+:root {
+  --bg: #07050a;
+  --panel: rgba(15, 9, 17, .91);
+  --red: #c01e3d;
+  --dark-red: #5c1028;
+  --purple: #67318b;
+  --gold: #c9aa70;
+  --text: #e7dce0;
+  --muted: #a0929e;
+  --reader-size: 20px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  overflow-x: hidden;
+  isolation: isolate;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Crimson Text', Georgia, serif;
+}
+
+/* DARK MOVING BACKGROUND */
+
+.atmosphere {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 10% 20%, rgba(130, 12, 48, .27), transparent 45%),
+    radial-gradient(ellipse at 90% 65%, rgba(76, 23, 115, .22), transparent 48%),
+    linear-gradient(135deg, #07050a, #120812, #08050d);
+  background-size: 200% 200%;
+  animation: darkBackground 16s ease-in-out infinite alternate;
+}
+
+@keyframes darkBackground {
+  from { background-position: 0% 0%; }
+  to { background-position: 100% 100%; }
+}
+
+.mist {
+  position: absolute;
+  width: 150%;
+  height: 45%;
+  left: -25%;
+  border-radius: 50%;
+  filter: blur(75px);
+  opacity: .15;
+  background: #921333;
+  animation: mistMove 20s ease-in-out infinite alternate;
+}
+
+.mist.one { top: 10%; }
+
+.mist.two {
+  bottom: 5%;
+  background: #55217d;
+  animation-delay: -8s;
+}
+
+@keyframes mistMove {
+  from { transform: translateX(-12%) scale(1); }
+  to { transform: translateX(12%) scale(1.3); }
+}
+
+/* MAGIC CIRCLE */
+
+.magic-circle {
+  position: absolute;
+  width: 440px;
+  height: 440px;
+  left: 50%;
+  top: 30%;
+  transform: translateX(-50%);
+  border: 1px solid rgba(192, 30, 61, .14);
+  border-radius: 50%;
+  box-shadow: 0 0 70px rgba(192, 30, 61, .08);
+  animation: circleRotate 65s linear infinite;
+}
+
+.magic-circle::before,
+.magic-circle::after {
+  content: "";
+  position: absolute;
+  inset: 45px;
+  border: 1px dashed rgba(192, 30, 61, .22);
+  border-radius: 50%;
+}
+
+.magic-circle::after {
+  inset: 100px;
+  border-style: solid;
+  transform: rotate(45deg);
+}
+
+@keyframes circleRotate {
+  to { rotate: 360deg; }
+}
+
+/* EMBERS */
+
+.embers {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.ember {
+  position: absolute;
+  bottom: -15px;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: #f04455;
+  box-shadow: 0 0 10px 2px rgba(240, 44, 70, .65);
+  animation: emberRise linear infinite;
+  opacity: 0;
+}
+
+@keyframes emberRise {
+  0% {
+    transform: translate(0, 0) scale(.5);
+    opacity: 0;
+  }
+  15% { opacity: .8; }
+  85% { opacity: .6; }
+  100% {
+    transform: translate(45px, -105vh) scale(1.5);
+    opacity: 0;
+  }
+}
+
+/* HEADER */
+
+header, main, footer, .music-panel {
+  position: relative;
+  z-index: 1;
+}
+
+header {
+  min-height: 370px;
+  padding: 75px 20px 60px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 1px solid rgba(192, 30, 61, .3);
+  background: linear-gradient(to bottom, rgba(0,0,0,.35), transparent);
+}
+
+.eyebrow {
+  color: var(--red);
+  letter-spacing: 6px;
+  font-family: 'Cinzel', serif;
+  font-size: 11px;
+  margin-bottom: 23px;
+}
+
+header h1 {
+  font-family: 'Cinzel', serif;
+  font-weight: 800;
+  font-size: clamp(34px, 8vw, 68px);
+  letter-spacing: 4px;
+  color: #f1e5df;
+  text-shadow:
+    0 0 12px rgba(192, 30, 61, .6),
+    0 0 35px rgba(192, 30, 61, .25);
+}
+
+.header-line {
+  width: 120px;
+  height: 2px;
+  margin: 23px auto;
+  background: linear-gradient(to right, transparent, var(--red), transparent);
+}
+
+header p {
+  color: #a99ba7;
+  letter-spacing: 3px;
+  font-size: 16px;
+}
+
+/* MAIN CONTENT */
+
+main {
+  width: min(880px, 93%);
+  margin: 45px auto 90px;
+}
+
+.episode-card {
+  background: var(--panel);
+  border: 1px solid rgba(192, 30, 61, .25);
+  border-radius: 5px;
+  padding: clamp(22px, 5vw, 55px);
+  box-shadow:
+    0 20px 90px rgba(0,0,0,.55),
+    0 0 35px rgba(115, 20, 55, .08);
+  backdrop-filter: blur(10px);
+}
+
+.season-label {
+  text-align: center;
+  color: var(--red);
+  font-family: 'Cinzel', serif;
+  font-size: 12px;
+  letter-spacing: 4px;
+  font-weight: 700;
+  margin-bottom: 17px;
+}
+
+.episode-title {
+  text-align: center;
+  font-family: 'Cinzel', serif;
+  font-weight: 800;
+  font-size: clamp(25px, 5vw, 39px);
+  line-height: 1.5;
+  color: var(--gold);
+  text-shadow: 0 0 20px rgba(192, 30, 61, .2);
+}
+
+.episode-subtitle {
+  text-align: center;
+  color: var(--muted);
+  font-size: 15px;
+  letter-spacing: 3px;
+  margin-top: 10px;
+}
+
+.separator {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  color: var(--red);
+  margin: 35px 0;
+}
+
+.separator::before,
+.separator::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(192,30,61,.6));
+}
+
+.separator::after {
+  transform: rotate(180deg);
+}
+
+/* SCENE TITLES */
+
+.scene-heading {
+  font-family: 'Cinzel', serif;
+  color: var(--gold);
+  font-size: 15px;
+  letter-spacing: 2px;
+  font-weight: 700;
+  margin: 38px 0 22px;
+  padding-left: 13px;
+  border-left: 3px solid var(--red);
+  text-shadow: 0 0 12px rgba(192,30,61,.2);
+}
+
+/* STORY TEXT */
+
+.story p {
+  font-size: var(--reader-size);
+  line-height: 1.9;
+  color: var(--text);
+  font-weight: 600;
+  margin-bottom: 23px;
+  text-align: justify;
+}
+
+.dialogue {
+  padding: 13px 17px;
+  margin: 22px 0 !important;
+  border-left: 2px solid var(--red);
+  background: linear-gradient(90deg, rgba(120,17,42,.13), transparent);
+  color: #f1e2e3 !important;
+  font-weight: 700 !important;
+}
+
+.character {
+  color: var(--gold);
+  font-weight: 700;
+}
+
+.impact {
+  text-align: center !important;
+  color: #ec5266 !important;
+  font-family: 'Cinzel', serif;
+  font-weight: 800 !important;
+  letter-spacing: 3px;
+  margin: 30px 0 !important;
+  text-shadow: 0 0 15px rgba(192,30,61,.4);
+}
+
+.scene-break {
+  text-align: center;
+  color: var(--red);
+  letter-spacing: 8px;
+  margin: 40px 0;
+}
+
+/* GLITCH EFFECT */
+
+.glitch {
+  display: inline-block;
+  position: relative;
+  color: #ff536a;
+  font-weight: 800;
+  text-shadow: 2px 0 #8c174d, -2px 0 #4c65a8;
+  animation: glitchText 3.5s infinite;
+}
+
+.glitch::before,
+.glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.glitch::before {
+  color: #ff315a;
+  animation: glitchBefore 4s infinite;
+}
+
+.glitch::after {
+  color: #8c68d5;
+  animation: glitchAfter 4s infinite;
+}
+
+@keyframes glitchText {
+  0%, 88%, 92%, 100% {
+    transform: translate(0);
+  }
+  89% { transform: translate(-2px, 1px); }
+  90% { transform: translate(2px, -1px); }
+  91% { transform: translate(-1px, 0); }
+}
+
+@keyframes glitchBefore {
+  0%, 88%, 100% {
+    opacity: 0;
+    clip-path: inset(0 0 100% 0);
+    transform: translate(0);
+  }
+  89% {
+    opacity: .8;
+    clip-path: inset(15% 0 65% 0);
+    transform: translate(-3px, 0);
+  }
+  90% {
+    opacity: .8;
+    clip-path: inset(60% 0 15% 0);
+    transform: translate(3px, 0);
+  }
+  91% { opacity: 0; }
+}
+
+@keyframes glitchAfter {
+  0%, 88%, 100% {
+    opacity: 0;
+    clip-path: inset(100% 0 0 0);
+    transform: translate(0);
+  }
+  89% {
+    opacity: .7;
+    clip-path: inset(45% 0 35% 0);
+    transform: translate(3px, 1px);
+  }
+  90% {
+    opacity: .7;
+    clip-path: inset(10% 0 70% 0);
+    transform: translate(-3px, -1px);
+  }
+  91% { opacity: 0; }
+}
+
+/* SHORT GLITCH FLASH */
+
+.glitch-line {
+  animation: lineTwitch 5s infinite;
+}
+
+@keyframes lineTwitch {
+  0%, 94%, 100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  95% {
+    transform: translateX(-3px);
+    opacity: .75;
+    text-shadow: 3px 0 var(--red);
+  }
+  96% {
+    transform: translateX(3px);
+    opacity: 1;
+    text-shadow: -3px 0 var(--purple);
+  }
+  97% {
+    transform: translateX(0);
+    text-shadow: none;
+  }
+}
+
+/* ENDING */
+
+.end-card {
+  margin-top: 55px;
+  padding: 35px 15px;
+  text-align: center;
+  border-top: 1px solid rgba(192,30,61,.4);
+  border-bottom: 1px solid rgba(192,30,61,.4);
+  background: radial-gradient(ellipse, rgba(110,15,43,.12), transparent 75%);
+}
+
+.end-card h2 {
+  font-family: 'Cinzel', serif;
+  color: var(--red);
+  font-size: 26px;
+  letter-spacing: 4px;
+  text-shadow: 0 0 18px rgba(192,30,61,.4);
+}
+
+.end-card p {
+  color: var(--muted);
+  text-align: center;
+  margin-top: 12px;
+  font-size: 17px;
+}
+
+.ending-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  max-width: 310px;
+  margin: 30px auto 0;
+}
+
+.ending-btn {
+  display: block;
+  padding: 15px 18px;
+  text-decoration: none;
+  text-align: center;
+  font-family: 'Cinzel', serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  border: 1px solid;
+  border-radius: 3px;
+  transition: .3s ease;
+}
+
+.menu-btn {
+  color: var(--gold);
+  border-color: rgba(198,166,106,.5);
+  background: rgba(198,166,106,.05);
+}
+
+.next-btn {
+  color: white;
+  border-color: var(--red);
+  background: linear-gradient(110deg, #4c1020, #941d36);
+  box-shadow: 0 0 20px rgba(165,30,53,.15);
+}
+
+.ending-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 0 25px rgba(192,30,61,.35);
+}
+
+/* READER CONTROLS */
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 25px;
+}
+
+.control-button {
+  background: rgba(25,15,24,.9);
+  border: 1px solid rgba(198,166,106,.3);
+  color: var(--gold);
+  padding: 10px 17px;
+  font-family: inherit;
+  font-size: 15px;
+  cursor: pointer;
+  border-radius: 3px;
+}
+
+/* MUSIC */
+
+.music-panel {
+  position: fixed;
+  right: 15px;
+  bottom: 15px;
+  width: min(260px, calc(100% - 30px));
+  background: rgba(10,6,13,.96);
+  border: 1px solid rgba(192,30,61,.55);
+  padding: 13px;
+  border-radius: 5px;
+  box-shadow: 0 5px 35px rgba(0,0,0,.6);
+  backdrop-filter: blur(10px);
+}
+
+.music-title {
+  font-family: 'Cinzel', serif;
+  color: var(--gold);
+  font-size: 11px;
+  letter-spacing: 2px;
+  margin-bottom: 10px;
+}
+
+.music-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.music-row button {
+  background: #68152d;
+  border: 1px solid var(--red);
+  color: white;
+  padding: 8px 13px;
+  cursor: pointer;
+  border-radius: 3px;
+  font-family: inherit;
+}
+
+.music-row input {
+  width: 100%;
+  min-width: 0;
+  accent-color: var(--red);
+}
+
+.music-note {
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 8px;
+}
+
+footer {
+  text-align: center;
+  padding: 35px 15px 110px;
+  color: #71616b;
+  letter-spacing: 2px;
+  font-size: 12px;
+}
+
+/* MOBILE */
+
+@media(max-width: 600px) {
+  header {
+    min-height: 280px;
+    padding: 55px 15px 40px;
+  }
+
+  header h1 {
+    letter-spacing: 2px;
+  }
+
+  main {
+    width: 94%;
+    margin-top: 25px;
+  }
+
+  .episode-card {
+    padding: 23px 19px;
+  }
+
+  .story p {
+    line-height: 1.85;
+  }
+
+  .magic-circle {
+    width: 280px;
+    height: 280px;
+  }
+}
+
+@media(prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="atmosphere">
+  <div class="mist one"></div>
+  <div class="mist two"></div>
+  <div class="magic-circle"></div>
+</div>
+
+<div class="embers" id="embers"></div>
+
+<header>
+  <div class="eyebrow">A Dark Fantasy Novel</div>
+  <h1>THE CURSED AGE</h1>
+  <div class="header-line"></div>
+  <p>Season 01 · Episode 02</p>
+</header>
+
+<main>
+
+  <div class="controls">
+    <button class="control-button" onclick="changeFont(-1)">A−</button>
+    <button class="control-button" onclick="changeFont(1)">A+</button>
+    <button class="control-button" onclick="scrollToTop()">↑ TOP</button>
+  </div>
+
+  <article class="episode-card">
+
+    <div class="season-label">SEASON 01 — EPISODE 02</div>
+
+    <h2 class="episode-title glitch-line">
+      FROZEN RESOLVE
+    </h2>
+
+    <p class="episode-subtitle">
+      TWO WARRIORS · ONE BATTLEFIELD · NO RETREAT
+    </p>
+
+    <div class="separator">✦</div>
+
+    <section class="story">
+
+      <h3 class="scene-heading">Scene 01 — The Cold Encounter</h3>
+
+      <p>
+        Natan and Amy stepped into the battlefield.
+      </p>
+
+      <p class="impact glitch" data-text="TWO DIFFERENT PRESENCES.">
+        TWO DIFFERENT PRESENCES.
+      </p>
+
+      <p class="impact">TWO DIFFERENT KINDS OF COLD.</p>
+
+      <p>
+        The arena slowly quieted again. The crowd seemed to sense that
+        this was something deeper than just another duel.
+      </p>
+
+      <p>
+        Both competitors took their positions. Amy wore a slight smirk,
+        her eyes sharp and cold like frozen glass.
+      </p>
+
+      <p class="dialogue">
+        <span class="character">Amy:</span>
+        "Kid… you can still walk away. I won't blame you if you leave
+        before getting hurt."
+      </p>
+
+      <p>
+        Natan's expression didn't change.
+      </p>
+
+      <p class="dialogue">
+        <span class="character">Natan:</span>
+        "Nice words… but overconfidence isn't a strength."
+      </p>
+
+      <p class="dialogue">
+        <span class="character">Amy:</span>
+        "Then show me what you've got."
+      </p>
+
+      <p>
+        A brief silence settled over the arena.
+      </p>
+
+      <p class="impact glitch" data-text="THEN—">THEN—</p>
+
+      <p class="impact">"FIGHT!"</p>
+
+      <p>
+        The announcer's voice exploded across the stadium.
+      </p>
+
+      <p>
+        The ground trembled as both fighters moved instantly.
+      </p>
+
+      <p class="impact glitch" data-text="THEY CLASHED.">
+        THEY CLASHED.
+      </p>
+
+      <p class="impact">FAST. CLEAN. PRECISE.</p>
+
+      <p>
+        Every movement was refined. Neither wasted a single motion.
+        Amy struck first, her attacks smooth and controlled, each hit
+        carrying tremendous pressure.
+      </p>
+
+      <p class="dialogue">
+        <span class="character">Amy:</span>
+        "Nice…"
+      </p>
+
+      <p>
+        She muttered the word, almost impressed.
+      </p>
+
+      <div class="scene-break">✦ ✦ ✦</div>
+
+      <h3 class="scene-heading">Scene 02 — A Change in Rhythm</h3>
+
+      <p>
+        Natan flipped backward, avoiding a follow-up strike. Before Amy
+        could fully recover, he suddenly dashed forward.
+      </p>
+
+      <p>
+        Amy blocked his attack and countered instantly with a fist aimed
+        at his ribs.
+      </p>
+
+      <p>
+        Natan twisted at the last moment, barely avoiding the strike.
+        In one smooth movement, he appeared behind her.
+      </p>
+
+      <p class="dialogue">
+        <span class="character">Natan:</span>
+        "Try dodging this."
+      </p>
+
+      <p>
+        A sharp strike landed against Amy's back. She slid forward
+        slightly before regaining her balance.
+      </p>
+
+      <p class="dialogue">
+        <span class="character">Amy:</span>
+        "…Nice one. But not enough."
+      </p>
+
+      <p>
+        Her aura changed.
+      </p>
+
+      <p class="impact glitch" data-text="THE AIR GREW HEAVIER.">
+        THE AIR GREW HEAVIER.
+      </p>
+
+      <p>
+        Amy stepped forward and unleashed a series of heavy, chained
+        attacks. Natan blocked some and dodged others, but the pressure
+        continued to build.
+      </p>
+
+      <p class="dialogue">
+        <span class="character">Natan:</span>
+        "You're fast…"
+      </p>
+
+      <p>
+        His breathing had become slightly heavier.
+      </p>
+
+      <p>
+        Amy didn't reply. She only increased the intensity of her
+        attacks.
+      </p>
+
+      <p>
+        Natan suddenly reached for his kunai.
+      </p>
+
+      <p class="impact">STEEL FLASHED.</p>
+
+      <p>
+        Amy responded instantly, drawing her sword.
+      </p>
+
+      <p class="impact glitch" data-text="CLANG!">CLANG!</p>
+
+      <p>
+        Metal collided. Sparks scattered across the battlefield.
+        The duel had changed completely.
+      </p>
+
+      <p>
+        This was no longer just hand-to-hand combat. Every movement
+        carried a dangerous level of intent.
+      </p>
+
+      <div class="scene-break">✦ ✦ ✦</div>
+
+      <h3 class="scene-heading">Scene 03 — The Storm of Elements</h3>
+
+      <p>
+        Natan charged forward with a series of kunai strikes. Amy
+        evaded, countered, and gradually forced him backward.
+      </p>
+
+      <p>
+        The ground beneath them cracked from their repeated impacts.
+      </p>
+
+      <p>
+        Then—
+      </p>
+
+      <p class="impact glitch" data-text="NATAN SHIFTED HIS STANCE.">
+        NATAN SHIFTED HIS STANCE.
+      </p>
+
+      <p>
+        A sudden change.
+      </p>
+
+      <p>
+        The air began to move around him. A current of wind gathered
+        near his body, growing stronger with every passing second.
+      </p>
+
+      <p class="impact">WIND TECHNIQUE.</p>
+
+      <p>
+        Amy's eyes narrowed.
+      </p>
+
+      <p class="dialogue">
+        <span class="character">Amy:</span>
+        "Elemental user…"
+      </p>
+
+      <p>
+        She responded immediately. Water energy formed around her
+        blade, surrounding it with a flowing aura.
+      </p>
+
+      <p>
+        The battlefield changed completely.
+      </p>
+
+      <p class="impact glitch" data-text="WIND CLASHED WITH WATER.">
+        WIND CLASHED WITH WATER.
+      </p>
+
+      <p>
+        Residual fire energy ignited sudden bursts across the field.
+        Ice began forming along the edges as Amy pushed her technique
+        even further.
+      </p>
+
+      <p>
+        Steel, wind, water, and ice collided. The arena became a
+        storm of elements, with both fighters refusing to surrender
+        their advantage.
+      </p>
+
+      <p>
+        Natan pushed forward again, attempting to break through
+        Amy's defense.
+      </p>
+
+      <div class="scene-break">✦ ✦ ✦</div>
+
+      <h3 class="scene-heading">Scene 04 — The Hidden Technique</h3>
+
+      <p>
+        But Amy suddenly changed her rhythm.
+      </p>
+
+      <p class="impact">A FEINT.</p>
+
+      <p>
+        A distraction.
+      </p>
+
+      <p>
+        For a split second, Natan hesitated.
+      </p>
+
+      <p class="impact glitch" data-text="THAT WAS ENOUGH.">
+        THAT WAS ENOUGH.
+      </p>
+
+      <p>
+        Amy's aura sharpened. Something hidden within her technique
+        activated.
+      </p>
+
+      <p>
+        A strange green energy spread silently through the air.
+      </p>
+
+      <p class="impact">LEAF POISON ENERGY.</p>
+
+      <p>
+        Natan's movements began to slow. His breathing became uneven
+        as he realized what had happened.
+      </p>
+
+      <p class="dialogue">
+        <span class="character">Natan:</span>
+        "Tch… poison…?"
+      </p>
+
+      <p>
+        Amy didn't answer.
+      </p>
+
+      <p>
+        She stepped forward and entered her final stance.
+      </p>
+
+      <p class="impact glitch" data-text="ONE DECISIVE STRIKE.">
+        ONE DECISIVE STRIKE.
+      </p>
+
+      <p class="impact">BANG!</p>
+
+      <p>
+        The attack connected directly. Natan was sent flying backward
+        and crashed onto the ground.
+      </p>
+
+      <p>
+        Dust rose around him.
+      </p>
+
+      <p class="impact glitch" data-text="SILENCE.">SILENCE.</p>
+
+      <div class="scene-break">✦ ✦ ✦</div>
+
+      <h3 class="scene-heading">Scene 05 — The Winner</h3>
+
+      <p>
+        The referee quickly stepped forward.
+      </p>
+
+      <p class="dialogue">
+        <span class="character">Referee:</span>
+        "One… two… three…"
+      </p>
+
+      <p class="impact glitch" data-text="AMY WINS!">
+        AMY WINS!
+      </p>
+
+      <p>
+        The crowd erupted. Cheers and applause filled the entire
+        stadium.
+      </p>
+
+      <p>
+        Amy remained still for a moment before turning away.
+        She showed no celebration, no smile, and no excitement.
+      </p>
+
+      <p class="impact">JUST A COLD VICTORY.</p>
+
+      <p class="dialogue">
+        <span class="character">Amy:</span>
+        "Told you."
+      </p>
+
+      <p>
+        She walked away without even looking back.
+      </p>
+
+      <p>
+        Meanwhile, Natan tried to stand, struggling to regain
+        his balance.
+      </p>
+
+      <p>
+        His friends rushed toward him.
+      </p>
+
+      <p class="dialogue">
+        <span class="character">His Friends:</span>
+        "Are you okay?"
+      </p>
+
+      <p>
+        Natan exhaled slowly and forced a weak nod.
+      </p>
+
+      <p class="dialogue">
+        <span class="character">Natan:</span>
+        "…Yeah… I'm fine."
+      </p>
+
+      <p>
+        But his eyes told a different story.
+      </p>
+
+      <p>
+        He wasn't simply thinking about the defeat.
+        He was remembering every movement, every attack,
+        and every mistake.
+      </p>
+
+      <p class="impact glitch" data-text="HE WAS WATCHING.">
+        HE WAS WATCHING.
+      </p>
+
+      <p class="impact">HE WAS LEARNING.</p>
+
+      <p>
+        The tournament continued, but something had changed.
+        Natan had lost the battle—not his determination.
+      </p>
+
+    </section>
+
+    <div class="end-card">
+      <h2>TO BE CONTINUED</h2>
+      <p>The tournament has more secrets waiting to unfold...</p>
+
+      <div class="ending-buttons">
+        <a href="index.html" class="ending-btn menu-btn">
+          ← RETURN TO MAIN MENU
+        </a>
+
+        <a href="episode3.html" class="ending-btn next-btn">
+          TAP FOR EPISODE 3 →
+        </a>
+      </div>
+    </div>
+
+  </article>
+</main>
+
+<footer>
+  THE CURSED AGE · FROZEN RESOLVE
+</footer>
+
+<!-- MUSIC CONTROLLER -->
+
+<div class="music-panel">
+  <div class="music-title">DARK AMBIENCE</div>
+
+  <div class="music-row">
+    <button id="musicButton" onclick="toggleMusic()">▶ Play</button>
+    <input id="volume" type="range" min="0" max="100" value="30">
+  </div>
+
+  <div class="music-note" id="musicStatus">
+    Tap Play to enter the atmosphere.
+  </div>
+</div>
+
+<script>
+// FLOATING EMBERS
+
+const emberContainer = document.getElementById("embers");
+
+for (let i = 0; i < 40; i++) {
+  const ember = document.createElement("div");
+
+  ember.className = "ember";
+  ember.style.left = Math.random() * 100 + "%";
+  ember.style.animationDuration = (8 + Math.random() * 16) + "s";
+  ember.style.animationDelay = (Math.random() * 15) + "s";
+
+  const size = 2 + Math.random() * 3;
+  ember.style.width = size + "px";
+  ember.style.height = size + "px";
+
+  emberContainer.appendChild(ember);
+}
+
+// READING CONTROLS
+
+let fontSize = 20;
+
+function changeFont(amount) {
+  fontSize = Math.max(15, Math.min(28, fontSize + amount));
+
+  document.documentElement.style.setProperty(
+    "--reader-size",
+    fontSize + "px"
+  );
+}
+
+function scrollToTop() {
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+}
+
+// DARK AMBIENT SOUND
+
+let audioContext = null;
+let masterGain = null;
+let isPlaying = false;
+
+function startAudio() {
+  const AudioClass =
+    window.AudioContext || window.webkitAudioContext;
+
+  if (!AudioClass) {
+    document.getElementById("musicStatus").textContent =
+      "Audio is not supported by this browser.";
+    return false;
+  }
+
+  audioContext = new AudioClass();
+
+  masterGain = audioContext.createGain();
+
+  masterGain.gain.value =
+    Number(document.getElementById("volume").value) / 100 * 0.12;
+
+  masterGain.connect(audioContext.destination);
+
+  const frequencies = [55, 82.41, 110, 164.81];
+
+  frequencies.forEach((frequency, index) => {
+    const oscillator = audioContext.createOscillator();
+    const gain = audioContext.createGain();
+
+    oscillator.type = index === 2 ? "triangle" : "sine";
+    oscillator.frequency.value = frequency;
+    gain.gain.value = index === 0 ? .38 : .12;
+
+    oscillator.connect(gain);
+    gain.connect(masterGain);
+    oscillator.start();
+  });
+
+  return true;
+}
+
+async function toggleMusic() {
+  const button = document.getElementById("musicButton");
+  const status = document.getElementById("musicStatus");
+
+  if (!audioContext && !startAudio()) return;
+
+  try {
+    if (!isPlaying) {
+      await audioContext.resume();
+      isPlaying = true;
+      button.textContent = "Ⅱ Pause";
+      status.textContent = "Dark ambience is playing.";
+    } else {
+      await audioContext.suspend();
+      isPlaying = false;
+      button.textContent = "▶ Play";
+      status.textContent = "Ambience paused.";
+    }
+  } catch (error) {
+    status.textContent = "Unable to start audio.";
+  }
+}
+
+document.getElementById("volume").addEventListener("input", function() {
+  if (masterGain && audioContext) {
+    masterGain.gain.setTargetAtTime(
+      Number(this.value) / 100 * .12,
+      audioContext.currentTime,
+      .05
+    );
+  }
+});
+</script>
+
+</body>
+</html>
